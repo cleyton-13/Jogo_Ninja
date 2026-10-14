@@ -1,6 +1,6 @@
 # Jogo Ninja (título provisório: *Shinobi no Michi*)
 
-Jogo de luta ninja 1 contra 1 para celular, estilo anime shōnen, feito em **Godot 4 + GDScript**.
+Jogo de luta ninja 1 contra 1 para celular, estilo anime shōnen, feito em **Godot 4 + GDScript**
 
 ## Começando
 
