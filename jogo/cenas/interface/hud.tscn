@@ -1,0 +1,169 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="Fundo"]
+bg_color = Color(0.16, 0.06, 0.09, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.29, 0.16, 0.19, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="Rastro"]
+bg_color = Color(1, 0.95, 0.85, 0.9)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="Vazio"]
+
+[sub_resource type="StyleBoxFlat" id="Vida"]
+bg_color = Color(0.91, 0.71, 0.28, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="Fundo" type="ColorRect" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 86.0
+color = Color(0.04, 0.03, 0.06, 0.55)
+
+[node name="Jogador" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 24.0
+offset_top = 12.0
+offset_right = 524.0
+offset_bottom = 72.0
+
+[node name="Nome" type="Label" parent="Jogador"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 26.0
+theme_override_font_sizes/font_size = 20
+text = "Kaito"
+
+[node name="Rastro" type="ProgressBar" parent="Jogador"]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 500.0
+offset_bottom = 54.0
+theme_override_styles/background = SubResource("Fundo")
+theme_override_styles/fill = SubResource("Rastro")
+value = 100.0
+show_percentage = false
+
+[node name="Vida" type="ProgressBar" parent="Jogador"]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 500.0
+offset_bottom = 54.0
+theme_override_styles/background = SubResource("Vazio")
+theme_override_styles/fill = SubResource("Vida")
+value = 100.0
+show_percentage = false
+
+[node name="Oponente" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -524.0
+offset_top = 12.0
+offset_right = -24.0
+offset_bottom = 72.0
+
+[node name="Nome" type="Label" parent="Oponente"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 26.0
+theme_override_font_sizes/font_size = 20
+text = "Ryū"
+horizontal_alignment = 2
+
+[node name="Rastro" type="ProgressBar" parent="Oponente"]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 500.0
+offset_bottom = 54.0
+theme_override_styles/background = SubResource("Fundo")
+theme_override_styles/fill = SubResource("Rastro")
+fill_mode = 1
+value = 100.0
+show_percentage = false
+
+[node name="Vida" type="ProgressBar" parent="Oponente"]
+layout_mode = 0
+offset_top = 30.0
+offset_right = 500.0
+offset_bottom = 54.0
+theme_override_styles/background = SubResource("Vazio")
+theme_override_styles/fill = SubResource("Vida")
+fill_mode = 1
+value = 100.0
+show_percentage = false
+
+[node name="Tempo" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 14.0
+offset_right = 60.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 44
+theme_override_constants/outline_size = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "99"
+horizontal_alignment = 1
+
+[node name="Combo" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -324.0
+offset_top = 100.0
+offset_right = -28.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 44
+theme_override_constants/outline_size = 10
+theme_override_colors/font_color = Color(0.91, 0.71, 0.28, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+horizontal_alignment = 2
+
+[node name="Mensagem" type="Label" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_font_sizes/font_size = 120
+theme_override_constants/outline_size = 20
+theme_override_colors/font_color = Color(0.96, 0.69, 0.29, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "K.O.!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Submensagem" type="Label" parent="."]
+visible = false
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 80.0
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 32
+theme_override_constants/outline_size = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1

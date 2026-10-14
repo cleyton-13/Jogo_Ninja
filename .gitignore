@@ -1,0 +1,15 @@
+# Cache da Godot (é recriado automaticamente)
+jogo/.godot/
+
+# Cópias .jpg das artes só para ferramentas de vídeo (os originais .jfif são versionados)
+Personagens/9 - Para vídeo (jpg)/
+Anime - Roteiro e Imagens/*.jpg
+
+# Builds exportados
+builds/
+*.apk
+*.aab
+
+# Sistema
+Thumbs.db
+.DS_Store

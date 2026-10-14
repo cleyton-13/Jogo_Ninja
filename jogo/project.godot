@@ -1,0 +1,43 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Shinobi no Michi"
+config/description="Jogo de luta ninja 1 contra 1 para celular (projeto de aprendizado)."
+run/main_scene="res://cenas/luta/arena.tscn"
+config/features=PackedStringArray("4.7", "Mobile")
+
+[autoload]
+
+Controles="*res://scripts/controles.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[layer_names]
+
+3d_physics/layer_1="cenario"
+3d_physics/layer_2="lutadores"
+3d_physics/layer_3="hitbox"
+3d_physics/layer_4="hurtbox"
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

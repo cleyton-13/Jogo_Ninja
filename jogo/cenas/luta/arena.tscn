@@ -1,0 +1,144 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/arena.gd" id="1_arena"]
+[ext_resource type="PackedScene" path="res://cenas/lutador/lutador.tscn" id="2_lutador"]
+[ext_resource type="Script" path="res://scripts/camera_luta.gd" id="3_camera"]
+[ext_resource type="Script" path="res://scripts/gestos.gd" id="4_gestos"]
+[ext_resource type="Script" path="res://scripts/controle_jogador.gd" id="5_controle"]
+[ext_resource type="PackedScene" path="res://cenas/interface/hud.tscn" id="6_hud"]
+[ext_resource type="Script" path="res://scripts/controle_ia.gd" id="7_ia"]
+[ext_resource type="Resource" path="res://recursos/ia/medio.tres" id="8_perfil"]
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 1
+background_color = Color(0.118, 0.078, 0.157, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.5, 0.65, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.2, 0.13, 0.25, 1)
+fog_density = 0.02
+
+[sub_resource type="BoxShape3D" id="Shape_chao"]
+size = Vector3(40, 1, 10)
+
+[sub_resource type="BoxMesh" id="Mesh_chao"]
+size = Vector3(40, 1, 12)
+
+[sub_resource type="StandardMaterial3D" id="Mat_chao"]
+albedo_color = Color(0.13, 0.11, 0.16, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_torii"]
+albedo_color = Color(0.7, 0.18, 0.13, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_pilar"]
+size = Vector3(0.5, 5, 0.5)
+
+[sub_resource type="BoxMesh" id="Mesh_kasagi"]
+size = Vector3(8.5, 0.45, 0.7)
+
+[sub_resource type="BoxMesh" id="Mesh_nuki"]
+size = Vector3(7, 0.3, 0.4)
+
+[node name="Arena" type="Node3D"]
+script = ExtResource("1_arena")
+
+[node name="Ambiente" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+[node name="Lua" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-35, 30, 0)
+light_color = Color(1, 0.9, 0.8, 1)
+shadow_enabled = true
+
+[node name="LuzLanterna" type="OmniLight3D" parent="."]
+position = Vector3(0, 3, -3)
+light_color = Color(1, 0.6, 0.3, 1)
+light_energy = 2.0
+omni_range = 10.0
+
+[node name="Chao" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Colisao" type="CollisionShape3D" parent="Chao"]
+position = Vector3(0, -0.5, 0)
+shape = SubResource("Shape_chao")
+
+[node name="Malha" type="MeshInstance3D" parent="Chao"]
+position = Vector3(0, -0.5, -1)
+mesh = SubResource("Mesh_chao")
+surface_material_override/0 = SubResource("Mat_chao")
+
+[node name="Torii" type="Node3D" parent="."]
+position = Vector3(0, 0, -6)
+
+[node name="PilarEsquerdo" type="MeshInstance3D" parent="Torii"]
+position = Vector3(-3, 2.5, 0)
+mesh = SubResource("Mesh_pilar")
+surface_material_override/0 = SubResource("Mat_torii")
+
+[node name="PilarDireito" type="MeshInstance3D" parent="Torii"]
+position = Vector3(3, 2.5, 0)
+mesh = SubResource("Mesh_pilar")
+surface_material_override/0 = SubResource("Mat_torii")
+
+[node name="Kasagi" type="MeshInstance3D" parent="Torii"]
+position = Vector3(0, 5.2, 0)
+mesh = SubResource("Mesh_kasagi")
+surface_material_override/0 = SubResource("Mat_torii")
+
+[node name="Nuki" type="MeshInstance3D" parent="Torii"]
+position = Vector3(0, 4.2, 0)
+mesh = SubResource("Mesh_nuki")
+surface_material_override/0 = SubResource("Mat_torii")
+
+[node name="Jogador" parent="." instance=ExtResource("2_lutador")]
+position = Vector3(-2, 0, 0)
+nome_exibicao = "Kaito"
+cor = Color(0.878, 0.282, 0.184, 1)
+
+[node name="Oponente" parent="." instance=ExtResource("2_lutador")]
+position = Vector3(2, 0, 0)
+nome_exibicao = "Ryū"
+cor = Color(0.557, 0.361, 0.941, 1)
+
+[node name="Camera" type="Camera3D" parent="." node_paths=PackedStringArray("lutador_a", "lutador_b")]
+position = Vector3(0, 1.4, 6)
+rotation_degrees = Vector3(-4, 0, 0)
+fov = 50.0
+script = ExtResource("3_camera")
+lutador_a = NodePath("../Jogador")
+lutador_b = NodePath("../Oponente")
+
+[node name="Gestos" type="Node" parent="."]
+script = ExtResource("4_gestos")
+
+[node name="ControleJogador" type="Node" parent="." node_paths=PackedStringArray("lutador", "gestos")]
+script = ExtResource("5_controle")
+lutador = NodePath("../Jogador")
+gestos = NodePath("../Gestos")
+
+[node name="ControleIA" type="Node" parent="." node_paths=PackedStringArray("lutador")]
+script = ExtResource("7_ia")
+lutador = NodePath("../Oponente")
+perfil = ExtResource("8_perfil")
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Dica" type="Label" parent="Interface"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -52.0
+offset_bottom = -8.0
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 1, 1, 0.6)
+text = "Toque/J: leve · Deslize p/ frente/K: médio · Segure à direita/L: pesado
+Segure à esquerda/S: defesa · Deslize p/ trás/Espaço: esquiva · A/D: andar"

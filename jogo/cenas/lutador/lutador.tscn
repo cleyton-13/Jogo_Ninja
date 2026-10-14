@@ -1,0 +1,113 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/lutador.gd" id="1_script"]
+[ext_resource type="Resource" path="res://recursos/golpes/leve.tres" id="2_leve"]
+[ext_resource type="Resource" path="res://recursos/golpes/medio.tres" id="3_medio"]
+[ext_resource type="Resource" path="res://recursos/golpes/pesado.tres" id="4_pesado"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_corpo"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="Mesh_corpo"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="BoxMesh" id="Mesh_faixa"]
+size = Vector3(0.74, 0.1, 0.74)
+
+[sub_resource type="StandardMaterial3D" id="Mat_faixa"]
+albedo_color = Color(0.6, 0.64, 0.74, 1)
+metallic = 0.6
+
+[sub_resource type="BoxMesh" id="Mesh_olhos"]
+size = Vector3(0.1, 0.06, 0.34)
+
+[sub_resource type="StandardMaterial3D" id="Mat_olhos"]
+albedo_color = Color(0.25, 0.66, 0.96, 1)
+emission_enabled = true
+emission = Color(0.25, 0.66, 0.96, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="BoxMesh" id="Mesh_golpe"]
+size = Vector3(0.5, 0.18, 0.18)
+
+[sub_resource type="StandardMaterial3D" id="Mat_golpe"]
+albedo_color = Color(0.96, 0.69, 0.29, 1)
+emission_enabled = true
+emission = Color(0.96, 0.69, 0.29, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="Mesh_escudo"]
+size = Vector3(0.08, 1.5, 0.9)
+
+[sub_resource type="StandardMaterial3D" id="Mat_escudo"]
+transparency = 1
+albedo_color = Color(0.25, 0.66, 0.96, 0.4)
+emission_enabled = true
+emission = Color(0.25, 0.66, 0.96, 1)
+
+[node name="Lutador" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_script")
+golpe_leve_dados = ExtResource("2_leve")
+golpe_medio_dados = ExtResource("3_medio")
+golpe_pesado_dados = ExtResource("4_pesado")
+
+[node name="Colisao" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("Shape_corpo")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+
+[node name="Forma" type="CollisionShape3D" parent="Hurtbox"]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("Shape_corpo")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Corpo" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 0.9, 0)
+mesh = SubResource("Mesh_corpo")
+
+[node name="Faixa" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 1.58, 0)
+mesh = SubResource("Mesh_faixa")
+surface_material_override/0 = SubResource("Mat_faixa")
+
+[node name="Olhos" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0.33, 1.45, 0)
+mesh = SubResource("Mesh_olhos")
+surface_material_override/0 = SubResource("Mat_olhos")
+
+[node name="Golpe" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0.62, 1.15, 0)
+visible = false
+mesh = SubResource("Mesh_golpe")
+surface_material_override/0 = SubResource("Mat_golpe")
+
+[node name="Escudo" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0.5, 0.95, 0)
+visible = false
+mesh = SubResource("Mesh_escudo")
+surface_material_override/0 = SubResource("Mat_escudo")
+
+[node name="Hitbox" type="Area3D" parent="Visual"]
+position = Vector3(0.65, 1.15, 0)
+collision_layer = 4
+collision_mask = 8
+monitorable = false
+
+[node name="Forma" type="CollisionShape3D" parent="Visual/Hitbox"]
+
+[node name="TextoAcao" type="Label3D" parent="."]
+position = Vector3(0, 2.15, 0)
+billboard = 1
+no_depth_test = true
+text = ""
+font_size = 48
+outline_size = 12

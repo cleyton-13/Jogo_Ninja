@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PerfilIA" format=3]
+
+[ext_resource type="Script" path="res://scripts/perfil_ia.gd" id="1_perfil"]
+
+[resource]
+script = ExtResource("1_perfil")
+nome = "Difícil"
+tempo_reacao = 0.18
+chance_reagir = 0.85
+preferencia_esquiva = 0.5
+agressividade = 0.75
+chance_guarda = 0.45
+combo_maximo = 5
+chance_finalizar_com_medio = 0.65
+intervalo_decisao = 0.25
